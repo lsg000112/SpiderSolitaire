@@ -10,19 +10,13 @@ namespace SpiderSolitaire
 
     public class Game
     {
-        public int score;
         static int totalCards = 104;
-
-        public Game()
-        {
-            this.score = 500;
-        }
 
         //initialize new game
         public void initGame(int suitNum)
         {
             Global.cols = new CardStack[10];
-            Global.cardsLeft = 0;
+            Global.deckLeft = 0;
             Global.clickedCards = new CardStack();
             Global.clickedCol = 0;
             for(int i = 0; i < 10; i++)
@@ -41,7 +35,7 @@ namespace SpiderSolitaire
                     for (int j = 1; j <= 13; j++)
                     {
                         Card newCard = new Card(i, j);
-                        cardSet[Global.cardsLeft++] = newCard;
+                        cardSet[Global.deckLeft++] = newCard;
                         
                     }
                 }
@@ -69,26 +63,34 @@ namespace SpiderSolitaire
             
         }
 
-        
+
 
         public static bool checkFinish(CardStack stack)
         {
             CardStack tempStack = new CardStack();
-            int shape = (int)stack.Peek().shape;
-            for(int i = 13; i > 0; i--)
+            if (stack.Count >= 13)
             {
-                Card card = stack.Pop();
-                tempStack.Push(card);
-                if(!((int)card.shape == shape && card.number == i))
+                int shape = (int)stack.Peek().shape;
+                for (int i = 1; i <= 13; i++)
                 {
-                    while(tempStack.Count > 0) 
-                    { 
-                        stack.Push(tempStack.Pop());
+                    Card card = stack.Pop();
+                    tempStack.Push(card);
+                    if (!((int)card.shape == shape && card.number == i))
+                    {
+                        while (tempStack.Count > 0)
+                        {
+                            stack.Push(tempStack.Pop());
+                        }
+
+                        return false;
                     }
-                    return false;
                 }
+                Console.Write(stack.col);
+                Console.WriteLine(" is Finished");
+                Global.setLeft -= 1;
+                return true;
             }
-            return true;
+            return false;
         }
 
         

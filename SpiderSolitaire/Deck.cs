@@ -42,7 +42,7 @@ namespace SpiderSolitaire
             {
                 draw(Global.hiddenCardStack, Global.cols[i % 10]);
             }
-            Global.cardsLeft -= cnt;
+            Global.deckLeft -= cnt;
             Global.form.update();
         }
     }

@@ -17,14 +17,20 @@ namespace SpiderSolitaire
             
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Global.form = new Form1();
-            Game game = new Game();
-            game.initGame(1);
-            Deck.deal(54);
+            PopupForm popup = new PopupForm();
+            popup.InitializeComponent();
+            DialogResult result = popup.ShowDialog();
             
-            Application.Run(Global.form);
-
-            
+            if(result == DialogResult.OK)
+            {
+                Global.score = 500;
+                Global.setLeft = 8;
+                Global.form = new Form1();
+                Game game = new Game();
+                game.initGame(popup.Level);
+                Deck.deal(54);
+                Application.Run(Global.form);
+            }
         }
     }
 }
